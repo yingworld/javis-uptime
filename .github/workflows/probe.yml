@@ -1,0 +1,29 @@
+name: probe
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+    inputs:
+      simulate_failure:
+        description: "Add a fake failing check (tests the alert issue)"
+        type: boolean
+        default: false
+permissions:
+  contents: read
+  issues: write
+  actions: write   # keepalive: re-enable this workflow once a day
+concurrency:
+  group: probe
+  cancel-in-progress: false
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Probe
+        run: python3 probe.py
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SIMULATE_FAILURE: ${{ inputs.simulate_failure || 'false' }}
+          HEARTBEAT_REQUIRED: "true"
