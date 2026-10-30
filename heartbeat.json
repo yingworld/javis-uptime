@@ -1,0 +1,11 @@
+{
+ "epoch": 1793340800,
+ "at": "2026-10-30T14:13:21+0800",
+ "ok": true,
+ "problems": [],
+ "summary": {
+  "disk_pct": 54,
+  "backup_age_h": 5.1,
+  "cert_min_days": 72
+ }
+}
